@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .content {
+            background-color: #87CEEB;
+            border-radius: 10px; /* Закругление углов */
+            padding: 20px;
+            width: 400px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h2>Фильтры для поиска врачей</h2>
+        <form>
+            <div>
+                <label for="region">Район:</label>
+                <select id="region" name="region">
+                    <option value="Район 1">Район 1</option>
+                    <option value="Район 2">Район 2</option>
+                    <option value="Район 3">Район 3</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="area">Область:</label>
+                <select id="area" name="area">
+                    <option value="Область 1">Область 1</option>
+                    <option value="Область 2">Область 2</option>
+                    <option value="Область 3">Область 3</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="clinic">Поликлиника:</label>
+                <select id="clinic" name="clinic">
+                    <option value="Поликлиника 1">Поликлиника 1</option>
+                    <option value="Поликлиника 2">Поликлиника 2</option>
+                    <option value="Поликлиника 3">Поликлиника 3</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="specialization">Специализация:</label>
+                <select id="specialization" name="specialization">
+                    <option value="Специализация 1">Специализация 1</option>
+                    <option value="Специализация 2">Специализация 2</option>
+                    <option value="Специализация 3">Специализация 3</option>
+                </select>
+            </div>
+
+            <input type="submit" value="Поиск">
+        </form>
+    </div>
+</body>
+</html>
