@@ -1,0 +1,121 @@
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: flex-start;
+            /*height: 100vh;*/
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            background-color: #87CEEB;
+            border-radius: 15px;
+            width: 17%;
+            margin: 20px auto;
+        }
+
+        .info {
+            flex: 1;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #87CEEB;
+        }
+
+        .info h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .edit-button,
+        .save-button {
+            background-color: #0074cc;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .appointment {
+            background-color: #87CEEB;
+            border-radius: 10px;
+            text-align: center;
+            padding: 20px;
+            width: 200px;
+            margin: 20px;
+        }
+
+        .appointment h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .appointment-button {
+            display: inline-block;
+            background-color: #0074cc;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin: 10px;
+            text-decoration: none;
+        }
+
+        .filter {
+            background-color: #87CEEB;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        .filter h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .filter-label {
+            font-weight: bold;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #0074cc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .container { /*панель слева*/
+            display: flex;
+            background-color: #87CEEB;
+            border-radius: 10px;
+                       margin: 0 150 0 0; /*верх право низ лево*/
+        }
+
+        .doctor {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            width: 100%;
+            
+            height: auto;
+        }
+
+        .doctor-image {
+            width: 100px;
+            height: 100px;
+            margin-right: 20px;
+            border-radius: 10px;
+            background-color: #f0f0f0;
+        }
+
+        .doctor-details {
+            flex: 1;
+        }
+
+        .hidden {
+            display: none;
+        }
