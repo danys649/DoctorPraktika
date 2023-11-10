@@ -1,46 +1,73 @@
- function connectBdForGetData() 
- {
-      var mysql = require("mysql");
-
-      var con = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "1111",
-        database: "doctorfam",
-        port: 3306,
-      });
-
-      con.connect(function (err) {
-        if (err) throw err;
-        console.log("Connected!");
-
-        const sqlScript =
-          "INSERT INTO `doctorfam`.`patient` (`ID`, `surname`, `name`) VALUES ('1', 'фыв', 'вф');";
-        con.query(sqlScript, function (err, result) {
-          if (err) throw err;
-          console.log("Record inserted");
-        });
-      });
-     /* con.end(function (err) {
-        if (err) {
-          return console.log("error:" + err.message);
-        }
-        console.log("Close the database connection.");
-      });*/
-
-  }
-  
-
-document.addEventListener("DOMContentLoaded", (event) => 
+function connectBdForGiveData(script) 
 {
+  console.log("function open!");
+  // Создайте новый объект XMLHttpRequest
+  var xhr = new XMLHttpRequest();
+
+  // Откройте новый POST-запрос на /query
+  xhr.open("POST", "http://localhost:8080/query", true);
+
+  // Установите заголовки запроса
+  xhr.setRequestHeader("Content-Type", "application/json");
+
+  // Отправьте SQL-запрос
+  xhr.send(
+    JSON.stringify({
+      query: script
+    })
+  );
+
+  // Когда ответ получен от сервера, выведите его
+  xhr.onload = function () {
+    if (xhr.status >= 200 && xhr.status < 300) {
+      console.log("Response: " + xhr.responseText);
+      // Закройте соединение
+      xhr.abort();
+    }
+  };
+}
+
+function connectBdForGetData(script, callback) {
+  console.log("Функция открыта!");
+  // Создайте новый объект XMLHttpRequest
+  var xhr = new XMLHttpRequest();
+
+  // Откройте новый POST-запрос на /query
+  xhr.open("POST", "http://localhost:8080/query", true);
+
+  // Установите заголовки запроса
+  xhr.setRequestHeader("Content-Type", "application/json");
+
+  // Отправьте SQL-запрос
+  xhr.send(
+    JSON.stringify({
+      query: script,
+    })
+  );
+
+  // Когда ответ получен от сервера, выведите его
+  xhr.onload = function () {
+    if (xhr.status >= 200 && xhr.status < 300) {
+      callback(xhr.responseText);
+      // Закройте соединение
+      xhr.abort();
+    }
+  };
+}
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", (event) => {
   const saveButton = document.getElementById("saveButton");
 
-  saveButton.addEventListener("click", () => 
-  {
+  saveButton.addEventListener("click", () => {
     console.log("button click;");
-    connectBdForGetData();
+
+
     
-    /*
     let lastName = document.getElementById("lastName");
     let firstName = document.getElementById("firstName");
     let middleName = document.getElementById("middleName");
@@ -84,10 +111,19 @@ document.addEventListener("DOMContentLoaded", (event) =>
     }
 
     if (allFilled) {
-      
+          connectBdForGiveData(
+            "INSERT INTO `doctorfam`.`patient` (`ID`, `surname`, `name`) VALUES ('1', 'фыв', 'вф');"
+          );
+        connectBdForGetData(
+          "SELECT * FROM `doctorfam`.`patient` WHERE `ID` = '1';",
+          function (response) {
+            lastName.value = JSON.stringify(response);
+          }
+        );
+          
       //document.body.innerHTML = ""; // Удалить текущий HTML
      // location.href = "Home.html"; // Перейти на новую страницу 'Home.html'
       
-    }*/
+    }
   });
 });
