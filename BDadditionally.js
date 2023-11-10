@@ -40,3 +40,21 @@ function connectBdForGetData(ClassesItems)
   // Закрываем подключение к базе данных.
   accessToTheDatabase.end();
 }
+
+
+
+/*
+        // Очищаем коллекцию 'ClassesItems'.
+        ClassesItems.clear();
+
+        // Обходим каждую строку в результатах запроса.
+        results.forEach((row) => {
+          // Создаем новый экземпляр класса 'ComboBoxItem'.
+          const item = new ComboBoxItem();
+
+          // Устанавливаем свойство 'Content' экземпляра 'item' равным значению столбца 'Class' в текущей строке.
+          item.Content = row["Class"];
+
+          // Добавляем 'item' в коллекцию 'ClassesItems'.
+          ClassesItems.add(item);
+          */
