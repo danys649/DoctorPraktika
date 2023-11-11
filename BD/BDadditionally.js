@@ -11,9 +11,11 @@ export function connectBdForGiveData(script) { // отправка данных
         console.log("Response: " + xhr.responseText);
         resolve(xhr.responseText); // Разрешить промис значением ответа сервера
         xhr.abort();
+        console.log("Connection close");
       } else {
         reject(new Error("Ошибка запроса: " + xhr.statusText));
         xhr.abort();
+        console.log("Connection close2");
       }
     };
   });
