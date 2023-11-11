@@ -1,92 +1,72 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>DoctorFam</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="HomePage\CSSHome.css">
-         <script src="HomePage\JSHome.js.js"></script>
-    </head>
-    <body>
- <div class="container">
-     <div class="info" id="infoBlock">
-         <h2>Информация о себе</h2>
-         <label for="name">Имя:</label>
-         <input type="text" id="name" value="Иван" disabled><br>
+<head>
+    <meta charset="utf-8">
+    <title>DoctorFam</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="HomePage\CSSHome.css">
+     <script src="HomePage\JSHome.js"></script>
+</head>
+<body>
+       <!-- Animated Wave Background  -->
+       <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+    <div class="container">
+        <div class="info" id="infoBlock">
+            <h2>Мій профіль</h2>
+            
 
-         <label for="surname">Фамилия:</label>
-         <input type="text" id="surname" value="Иванов" disabled><br>
+            <a href="профиль.html"><button class="show-all-button" id="showAllButton">Переглянути дані</button></a>
+            <a href="моя картка.html"><button class="cardrLink" id="myCardButton">Моя картка</button> </a>
 
-         <label for="dob" class="hidden">Дата рождения:</label>
-         <input type="text" id="dob" value="01.01" class="hidden" disabled><br>
+            <h2>Фільтр</h2>
+            <label class="filter-label" for="district">Район:</label>
+            <select class="filter-select" id="district">
+                <option value="район1">Район 1</option>
+                <option value="район2">Район 2</option>
+                <option value="район3">Район 3</option>
+            </select>
 
-         <label for="address" class="hidden">Адрес:</label>
-         <input type="text" id="address" value=" 123" class="hidden" disabled><br>
+            <label class="filter-label" for="region">Область:</label>
+            <select class="filter-select" id="region">
+                <option value="область1">Область 1</option>
+                <option value="область2">Область 2</option>
+                <option value="область3">Область 3</option>
+            </select>
 
-         <label for="gender" class="hidden">Пол:</label>
-         <input type="text" id="gender" value="Мужской" class="hidden" disabled><br>
+            <label class="filter-label" for="clinic">Поліклініка:</label>
+            <select class="filter-select" id="clinic">
+                <option value="поликлиника1">Поліклініка 1</option>
+                <option value="поликлиника2">Поліклініка 2</option>
+                <option value="поликлиника3">Спеціалізація 3</option>
+            </select>
 
-         <button class="show-all-button" id="showAllButton">Просмотреть все данные</button>
-         <button class="edit-button hidden" id="editButton">Редактировать данные</button>
-         <button class="save-button hidden" id="saveButton">Сохранить данные</button>
- 
+            <label class="filter-label" for="specialization">Спеціалізація:</label>
+            <select class="filter-select" id="specialization">
+                <option value="специализация1">Спеціалізація 1</option>
+                <option value="специализация2">Спеціалізація 2</option>
+                <option value="специализация3">Спеціалізація 3</option>
+            </select>
+            <button class="search-button "id="searchButton">Пошук лікарів</button>
+           
+          
+        </div>
+       
+    </div>
+    
 
-     
 
-     
-         <h2>ФИЛЬТР</h2>
-         <label class="filter-label" for="district">Район:</label>
-         <select class="filter-select" id="district">
-             <option value="район1">Район 1</option>
-             <option value="район2">Район 2</option>
-             <option value="район3">Район 3</option>
-         </select>
+   
 
-         <label class="filter-label" for="region">Область:</label>
-         <select class="filter-select" id="region">
-             <option value="область1">Область 1</option>
-             <option value="область2">Область 2</option>
-             <option value="область3">Область 3</option>
-         </select>
+    <div id="filterPrompt">Оберіть фільтри для пошуку лікарів</div>
 
-         <label class="filter-label" for="clinic">Поликлиника:</label>
-         <select class="filter-select" id="clinic">
-             <option value="поликлиника1">Поликлиника 1</option>
-             <option value="поликлиника2">Поликлиника 2</option>
-             <option value="поликлиника3">Поликлиника 3</option>
-         </select>
-
-         <label class="filter-label" for="specialization">Специализация:</label>
-         <select class="filter-select" id="specialization">
-             <option value="специализация1">Специализация 1</option>
-             <option value="специализация2">Специализация 2</option>
-             <option value="специализация3">Специализация 3</option>
-         </select>
-
-         <button id="searchButton">Поиск врачей</button>
-     </div>
- </div>
-
- <div class="doctors">
-     <h2>Список врачей:</h2>
-     <div class="doctor">
-         <div class="doctor-image"></div>
-         <div class="doctor-details">
-             <h3>Врач 1</h3>
-             <p>Место работы: Поликлиника 1</p>
-             <p>Специализация: Специализация 1</p>
-         </div>
-     </div>
-
-     <div class="doctor">
-         <div class="doctor-image"></div>
-         <div class="doctor-details">
-             <h3>Врач 2</h3>
-             <p>Место работы: Поликлиника 2</p>
-             <p>Специализация: Специализация 2</p>
-         </div>
-     </div>
- </div>
+        <div class="doctors" id="doctors">
+            <!-- Здесь будут отображаться результаты поиска -->
         
-      
-    </body>
+        
+</div>
+
+</body>
 </html>
