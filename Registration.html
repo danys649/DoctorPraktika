@@ -24,7 +24,7 @@
                   <a href="mailto:Ydehfuli@gmail.com" target="_blank" rel="noopener" class="social"><i class="fab fa-google"></i></a>
 
                  </div>
-                 <span>Or use your Email for registration</span>
+                 <span>Or use your Email for registration</span>  <!-- Регистрация -->
                  <label>
                      <input type="text" placeholder="Name" />
                  </label>
@@ -47,10 +47,11 @@
                  </div>
                  <span> Або увійдіть за допомогою Email</span>
                  <label>
-                     <input type="email" placeholder="Email" />
+                    <h1 style="visibility: hidden;" id="ErrorInPut">Ошибка входа</h1>
+                     <input type="text" placeholder="Email" id ="login"/><!-- Вход уже зарегестрированого пользователя -->
                  </label>
                  <label>
-                     <input type="password" placeholder="Password" />
+                     <input type="text" placeholder="Password" id ="password"/>
                  </label>
                  <a href="#">Forgot your password?</a>
                  <button id="signIN">Sign In</button>

@@ -13,13 +13,14 @@ export function connectBdForGiveData(script) { // отправка данных
         xhr.abort();
       } else {
         reject(new Error("Ошибка запроса: " + xhr.statusText));
+        xhr.abort();
       }
     };
   });
 }
 
 
-
+/*
 export function connectBdForGetData(script, callback) { // получениие данных
   console.log("Функция открыта!");
   // Создайте новый объект XMLHttpRequest
@@ -46,4 +47,4 @@ export function connectBdForGetData(script, callback) { // получениие 
       xhr.abort();
     }
   };
-}
+}*/

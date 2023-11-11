@@ -1,5 +1,5 @@
 import { connectBdForGiveData } from "/BD/BDadditionally.js"; //имортируем функцию соединение с БД для передачи данных
-import { connectBdForGetData } from "/BD/BDadditionally.js"; //имортируем функцию соединение с БД для получения данных
+
 
 
 document.addEventListener("DOMContentLoaded", (event) => {
