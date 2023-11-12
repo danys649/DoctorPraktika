@@ -1,12 +1,6 @@
 import { connectBdForGiveData } from "/BD/BDadditionally.js"; //имортируем функцию соединение с БД для передачи данных
 
-let exportedCount;
 
-function getLastCount() {
-  return exportedCount;
-}
-
-export { getLastCount };
 
 window.addEventListener("DOMContentLoaded", (event) => {
   const signUpButton = document.getElementById("signUp");
@@ -48,10 +42,10 @@ signUperButton.addEventListener("click", (event) => {
         if (data[0]) {
           let count = data[0]["id"]; // Извлечь число
           console.log("Ответ сервера: ", count);
-          exportedCount = count; // Сохранить count в глобальной переменной
           if (count > 0) {
             document.body.innerHTML = ""; // Удалить текущий HTML
             location.href = "profile.html"; // Перейти на новую страницу 'Home.html'
+             localStorage.setItem("count", count); //Какое значение принимает и какое сохраняет надо разобраться
           }
         } else {
           document.getElementById("ErrorInPut").style.visibility = "visible";
@@ -85,7 +79,9 @@ signINButton.addEventListener("click", (event) => { //вход
        if (data[0]) {
          let count = data[0]["id"]; // Извлечь число
          console.log("Ответ сервера: ", count);
-         if (count > 0) {
+         let clientID = localStorage.getItem("count");
+         console.log("ClientId = " + clientID);
+         if (count > 0) { //Лучше добавить проверку на число
            document.body.innerHTML = ""; // Удалить текущий HTML
            location.href = "Home.html"; // Перейти на новую страницу 'Home.html'
          }
@@ -95,13 +91,12 @@ signINButton.addEventListener("click", (event) => { //вход
      })
      .catch((error) => {
        console.error("Произошла ошибка: ", error);
-       //document.getElementById("ErrorInPut").style.visibility = "visible";
+       document.getElementById("ErrorInPut").style.visibility = "visible";
      });
  } catch (Exception) {
    console.error(Exception);
-   //document.getElementById("ErrorInPut").style.visibility = "visible";
- }
-  
+    document.getElementById("ErrorInPut").style.visibility = "visible";
+ } 
 });
 
 });

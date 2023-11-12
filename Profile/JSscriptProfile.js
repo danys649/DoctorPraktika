@@ -1,5 +1,10 @@
 import { connectBdForGiveData } from "/BD/BDadditionally.js"; //имортируем функцию соединение с БД для передачи данных
 //import { getLastCount } from "/Registration/JSregistration.js"; //имортируем ID клиента
+const backButton = document.getElementById("backButton");
+
+  backButton.addEventListener("click", () => {
+    window.history.back();
+  });
 
 
 document.addEventListener("DOMContentLoaded", (event) => {
@@ -7,6 +12,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   saveButton.addEventListener("click", () => {
     console.log("button click;");
+    let clientID = localStorage.getItem("count");
+    console.log("ClientId = " + clientID);
 
     let lastName = document.getElementById("lastName");
     let firstName = document.getElementById("firstName");
@@ -51,23 +58,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
 
     if (allFilled) {
-    /* connectBdForGiveData(
-       "INSERT INTO `doctorfam`.`patient` (`ID`, `surname`, `name`) VALUES ('1', 'фыв', 'вф');"
-     );*/
-     
-let ID = lastResult;
-console.log(ID);
-      connectBdForGiveData(
-        `SELECT * FROM doctorfam.patient WHERE ID = '${ID}';`,
-        function (response) {
-          lastNameElement.value = JSON.stringify(response);
-          console.log(response);
-        }
-      );
-
-       //document.body.innerHTML = ""; // Удалить текущий HTML
-       //location.href = "Home.html"; // Перейти на новую страницу 'Home.html'
+    connectBdForGiveData(
+      //НАПИСАТЬ ПРАВИЛЬ СКРИПТ В КОТОРОМ ВСЕ ДАННЫЕ БУДУТ ОБНОВЛЯТЬСЯ В БД СОГЛАСНО ПОЛУЧЕНОМУ КЛИЕНТСКОМУ ИНДЕКУС (clientID)
+      `SELECT * FROM doctorfam.patient WHERE ID = '${clientID}';`
+    );
+       document.body.innerHTML = ""; // Удалить текущий HTML
+       location.href = "Home.html"; // Перейти на новую страницу 'Home.html'
     }
   });
 });
+
 
