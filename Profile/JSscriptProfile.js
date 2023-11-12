@@ -1,5 +1,5 @@
 import { connectBdForGiveData } from "/BD/BDadditionally.js"; //имортируем функцию соединение с БД для передачи данных
-
+//import { getLastCount } from "/Registration/JSregistration.js"; //имортируем ID клиента
 
 
 document.addEventListener("DOMContentLoaded", (event) => {
@@ -51,19 +51,22 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
 
     if (allFilled) {
-     connectBdForGiveData(
+    /* connectBdForGiveData(
        "INSERT INTO `doctorfam`.`patient` (`ID`, `surname`, `name`) VALUES ('1', 'фыв', 'вф');"
-     );
-
-      connectBdForGetData(
-        "SELECT * FROM `doctorfam`.`patient` WHERE `ID` = '1';",
+     );*/
+     
+let ID = lastResult;
+console.log(ID);
+      connectBdForGiveData(
+        `SELECT * FROM doctorfam.patient WHERE ID = '${ID}';`,
         function (response) {
-          lastName.value = JSON.stringify(response);
+          lastNameElement.value = JSON.stringify(response);
+          console.log(response);
         }
       );
 
-       document.body.innerHTML = ""; // Удалить текущий HTML
-       location.href = "Home.html"; // Перейти на новую страницу 'Home.html'
+       //document.body.innerHTML = ""; // Удалить текущий HTML
+       //location.href = "Home.html"; // Перейти на новую страницу 'Home.html'
     }
   });
 });

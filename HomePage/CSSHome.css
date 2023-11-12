@@ -29,7 +29,7 @@ body {
     background-color: #ffffff;
     font-style: italic;
     opacity: 100%;
-
+    float: left;
 }
 
 .info h2 {
@@ -84,6 +84,13 @@ body {
 }
 
 /*начало стилей для анимации волн*/
+body {
+    background: radial-gradient(ellipse at center, rgba(255, 254, 234, 1) 0%, rgba(255, 254, 234, 1) 35%, #b7e8eb 100%);
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
 .ocean {
     height: 5%;
     width: 100%;
@@ -190,4 +197,9 @@ body {
     font-style: italic;
     color: white;
     opacity: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: black;
 }

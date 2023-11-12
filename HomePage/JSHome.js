@@ -3,6 +3,12 @@ document.addEventListener("DOMContentLoaded", function () {
   var doctorsDiv = document.getElementById("doctors");
   var filterPrompt = document.getElementById("filterPrompt");
   var pageTitle = document.getElementById("pageTitle");
+  let myCardButton = document.getElementById("myCardButton");
+
+  myCardButton.addEventListener("click", () => {
+    document.body.innerHTML = ""; // Удалить текущий HTML
+    location.href = "Page404.html"; // Перейти на новую страницу 'Page404.html'
+  });
 
   searchButton.addEventListener("click", function () {
     var district = document.getElementById("district").value;
@@ -62,6 +68,18 @@ document.addEventListener("DOMContentLoaded", function () {
     doctorDetails.appendChild(workplaceInfo);
     doctorDetails.appendChild(specializationInfo);
 
+    doctorBlock.appendChild(doctorImage);
+    doctorBlock.appendChild(doctorDetails);
+    var doctorLink = document.createElement("a");
+    doctorLink.href = "запись на приём.html";
+    doctorLink.appendChild(doctorName);
+    doctorLink.appendChild(workplaceInfo);
+    doctorLink.appendChild(specializationInfo);
+
+    // Добавляем блок ссылки в блок деталей
+    doctorDetails.appendChild(doctorLink);
+
+    // Добавляем блок изображения и блок деталей в основной блок врача
     doctorBlock.appendChild(doctorImage);
     doctorBlock.appendChild(doctorDetails);
 
