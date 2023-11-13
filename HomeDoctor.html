@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Медицинская страница</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="DoctorHome\HomeDoctor.css">
+        <script  src="DoctorHome\HomeDoctor.js"></script>
+    </head>
+
+<body>
+           <!-- Animated Wave Background  -->
+     <div class="ocean">
+     <div class="wave"></div>
+     <div class="wave"></div>
+ </div>
+ 
+    <div class="container" id="container">
+        <div class="info" id="infoBlock">
+        
+        <h2>Мій профіль</h2>
+       
+        <label for="lastName">Прізвище:</label><br>
+        <input type="text" id="lastName" name="lastName" value="Ваше прізвище"><br><br>
+        <label for="firstName">Ім'я:</label><br>
+        <input type="text" id="firstName" name="firstName" value="Ваше ім'я"><br><br>
+        <label for="middleName">По-батькові:</label><br>
+        <input type="text" id="middleName" name="middleName" value="По-батькові"><br><br>
+        <label for="dob">Дата народження:</label><br>
+        <input type="date" id="dob" name="dob"><br><br>      
+        <label for="Specialization">Вашa Спеціалізація:</label><br>
+        <input type="text" id="Specialization" name="Specialization"><br><br>
+        <label for="PlaceOfWork">Місце роботи:</label><br>
+        <input type="text" id="PlaceOfWork" name="PlaceOfWork"><br><br>
+
+        <div>
+         <button class="save-button" id="saveButton" >Зберегти дані</button>
+        </div>
+</div>
+    </div>
+    
+    <div class="patientlist" id="patient-list">
+        <!-- Список пациентов -->
+        <h2>Список паціентів на сьогодні</h2>
+        <div class="patient">
+            <div class="patient-info">
+                <span>Паціент 1 - Інформація</span>
+            </div>
+            <a href="Page404.html"><button onclick="showPatientCard('Паціент 1')">Картка</button></a>
+        </div>
+        <div class="patient">
+            <div class="patient-info">
+                <span>Паціент 2 - Інформація</span>
+            </div>
+            <a href="Page404.html"> <button onclick="showPatientCard('Паціент 2')">Картка</button></a>
+        </div>
+        <!-- Добавьте остальных пациентов -->
+    </div>
+
+    <div class="Calendar" id="calendar">
+        <!-- Календарь -->
+        <h2>Календар онлайн записів</h2>
+        <button class="open-CalendarBtn" id="openCalendarBtn">Відкрити календар</button>
+        <div id="calendarModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="closeCalendarBtn">&times;</span>
+                <h3>Оберіть дату</h3>
+                <div id="days-container"></div>
+            </div>
+        </div>
+        <div id="patient-info"></div>
+    </div>
+
+</body>
+
+</html>
