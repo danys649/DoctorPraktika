@@ -30,113 +30,87 @@ document.addEventListener("DOMContentLoaded", function () {
     doctorsDiv.innerHTML = "";
 
     // Проверяем, выбраны ли фильтры
-    if (district || region || clinic || specialization) {
-      // Создаем блоки с информацией о врачах и добавляем их
-
-      /*var doctorBlock1 = createDoctorBlock(
-        "Лікар 1",
-        "Поліклініка 1",
-        "Спеціалізація 1"
-      );
-      var doctorBlock2 = createDoctorBlock(
-        "Лікар 2",
-        "Поліклініка 2",
-        "Спеціалізація 2"
-      );*/
-
-async function getDoctorsCount() {
-  // Здесь должен быть ваш код для получения количества докторов из БД
-  let response = await connectBdForGiveData(
-    `SELECT COUNT(*) FROM doctorfam.patient;`
-  );
-  let data = JSON.parse(response); // Преобразовать ответ в JSON
-  if (data[0]) {
-    let count = data[0]["COUNT(*)"]; // Извлечь число
-    console.log("Ответ сервера: ", count);
-    console.log("Count = " + count);
-    return count;
-  }
-}
-
-
-      // Предположим, что у вас есть функция для получения информации о докторе из БД
-    async function getDoctorInfo(doctorId) {
-      // Здесь должен быть ваш код для получения информации о докторе из БД
-      let response = await connectBdForGiveData(
-        `SELECT * FROM doctorfam.patient WHERE ID = "${doctorId}";`
-      );
-      let data = JSON.parse(response); // Преобразовать ответ в JSON
-      if (data[0]) {
-        let doctorInfo = data[0]; // Извлечь информацию о докторе
-        console.log("Ответ сервера: ", doctorInfo);
-        return doctorInfo;
-      }
-    }
-
-function createContainer(doctorId) {
-  // Получаем существующий элемент div
-  const container = document.getElementById("doctors");
-
-  // Устанавливаем уникальный идентификатор для контейнера
-  container.id = "container-" + doctorId;
-
-  return container;
-}
-
-async function fillContainerWithDoctorInfo(doctorId) {
-  // Получаем контейнер
-  const container = document.getElementById("container-" + doctorId);
-
-  // Получаем информацию о докторе
-  const doctorInfo = await getDoctorInfo(doctorId);
-
-  // Заполняем контейнер информацией о докторе
-  container.innerHTML = `
-    <h2>${doctorInfo.name}</h2>
-    <p>${doctorInfo.specialty}</p>
-    <p>${doctorInfo.yearsOfExperience} years of experience</p>
-  `;
-}
-
-
-      async function createContainersForDoctors() {
-        const doctorsCount = await getDoctorsCount();
-        for (let i = 0; i < doctorsCount; i++) {
-          createContainer(i);
-          fillContainerWithDoctorInfo(i);
+      if (district || region || clinic || specialization) {
+      console.log("Получаем количестов докторов!");
+       // получаем количество докторов
+   
+     connectBdForGiveData(`SELECT COUNT(*) FROM doctorfam.patient;`) 
+     .then((response) => {
+        let data = JSON.parse(response); // Преобразовать ответ в JSON
+        if (data[0]) {
+          let count = data[0]["COUNT(*)"]; // Извлечь число
+          console.log("Ответ сервера: ", count);
+          if (count > 0) 
+          {
+            for(let i = 1; i <= count; i++)
+            {
+              var doctorBlock = createDoctorBlock(
+                "Лікар 1",
+                "Поліклініка 1",
+                "Спеціалізація 1"
+              );
+              doctorsDiv.appendChild(doctorBlock);
+              // Скрываем текст "Выберите фильтры для поиска врачей"
+              filterPrompt.style.display = 'none';
+   
+            }
+          }
+          else
+          {
+             //если врачей не будет найдено
+          }
         }
-      }
+      });
 
-      createContainersForDoctors();
+      /*else {
+        // Показываем текст "Выберите фильтры для поиска врачей"
+        filterPrompt.style.display = 'block';*/
+  
+  
+/*
+        // Создаем блоки с информацией о врачах и добавляем их
+        var doctorBlock1 = createDoctorBlock('Лікар 1', 'Поліклініка 1', 'Спеціалізація 1');
+        var doctorBlock2 = createDoctorBlock('Лікар 2', 'Поліклініка 2', 'Спеціалізація 2');
+        var doctorBlock3 = createDoctorBlock(
+          "Лікар 3",
+          "Поліклініка 2",
+          "Спеціалізація 2"
+        );
 
-      // Скрываем текст "Выберите фильтры для поиска врачей"
-      filterPrompt.style.display = "none";
+        
+        doctorsDiv.appendChild(doctorBlock2);
+        doctorsDiv.appendChild(doctorBlock3);
+
+        // Скрываем текст "Выберите фильтры для поиска врачей"
+        filterPrompt.style.display = 'none';
     } else {
-      // Показываем текст "Выберите фильтры для поиска врачей"
-      filterPrompt.style.display = "block";
-    }
-  });
+        // Показываем текст "Выберите фильтры для поиска врачей"
+        filterPrompt.style.display = 'block';
+    }*/
+       }
+      
+    });
+;
 
-  /*
-  // Функция для создания блока с информацией о враче
-  function createDoctorBlock(name, workplace, specialization) {
-    var doctorBlock = document.createElement("div");
-    doctorBlock.className = "doctor";
+// Функция для создания блока с информацией о враче
+function createDoctorBlock(name, workplace, specialization) {
+    var doctorBlock = document.createElement('div');
+    doctorBlock.className = 'doctor';
 
-    var doctorImage = document.createElement("div");
-    doctorImage.className = "doctor-image";
+    var doctorImage = document.createElement('div');
+    doctorImage.className = 'doctor-image';
 
-    var doctorDetails = document.createElement("div");
-    doctorDetails.className = "doctor-details";
+    var doctorDetails = document.createElement('div');
+    doctorDetails.className = 'doctor-details';
 
-    var doctorName = document.createElement("h3");
+    var doctorName = document.createElement('h3');
     doctorName.textContent = name;
 
-    var workplaceInfo = document.createElement("p");
-    workplaceInfo.textContent = "Місце роботи: " + workplace;
+    var workplaceInfo = document.createElement('p');
+    workplaceInfo.textContent = 'Місце роботи: ' + workplace;
 
-    var specializationInfo = document.createElement("p");
-    specializationInfo.textContent = "Спеціалізація: " + specialization;
+    var specializationInfo = document.createElement('p');
+    specializationInfo.textContent = 'Спеціалізація: ' + specialization;
 
     doctorDetails.appendChild(doctorName);
     doctorDetails.appendChild(workplaceInfo);
@@ -144,21 +118,21 @@ async function fillContainerWithDoctorInfo(doctorId) {
 
     doctorBlock.appendChild(doctorImage);
     doctorBlock.appendChild(doctorDetails);
-    var doctorLink = document.createElement("a");
-    doctorLink.href = "запись на приём.html";
+    var doctorLink = document.createElement('a');
+    doctorLink.href = 'запись на приём.html';
     doctorLink.appendChild(doctorName);
-    doctorLink.appendChild(workplaceInfo);
-    doctorLink.appendChild(specializationInfo);
+            doctorLink.appendChild(workplaceInfo);
+            doctorLink.appendChild(specializationInfo);
 
-    // Добавляем блок ссылки в блок деталей
-    doctorDetails.appendChild(doctorLink);
+            // Добавляем блок ссылки в блок деталей
+            doctorDetails.appendChild(doctorLink);
 
-    // Добавляем блок изображения и блок деталей в основной блок врача
-    doctorBlock.appendChild(doctorImage);
-    doctorBlock.appendChild(doctorDetails);
+            // Добавляем блок изображения и блок деталей в основной блок врача
+            doctorBlock.appendChild(doctorImage);
+            doctorBlock.appendChild(doctorDetails);
+
 
     return doctorBlock;
-  }*/
-
-  // Предположим, что у вас есть функция для получения количества докторов из БД
+}
+  
 });
