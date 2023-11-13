@@ -37,23 +37,32 @@ document.addEventListener("DOMContentLoaded", function () {
      connectBdForGiveData(`SELECT COUNT(*) FROM doctorfam.patient;`) 
      .then((response) => {
         let data = JSON.parse(response); // Преобразовать ответ в JSON
-        if (data[0]) {
+        if (data[0]) 
+        {
           let count = data[0]["COUNT(*)"]; // Извлечь число
           console.log("Ответ сервера: ", count);
           if (count > 0) 
           {
-            for(let i = 1; i <= count; i++)
-            {
-              var doctorBlock = createDoctorBlock(
-                "Лікар 1",
-                "Поліклініка 1",
-                "Спеціалізація 1"
-              );
-              doctorsDiv.appendChild(doctorBlock);
-              // Скрываем текст "Выберите фильтры для поиска врачей"
-              filterPrompt.style.display = 'none';
-   
-            }
+           
+          for (let i = 1; i <= count; i++) {
+            connectBdForGiveData(
+              `SELECT name FROM doctorfam.patient WHERE id=${i};`
+            ).then((response) => {
+              let data = JSON.parse(response); // Преобразовать ответ в JSON
+              console.log("DATA = " + JSON.stringify(data));
+              if (data[0]) {
+                var doctorBlock = createDoctorBlock(
+                  data[0].name, // Заменить "Лікар 1" на имя врача из БД
+                  "Поліклініка 1",
+                  "Спеціалізація 1"
+                );
+                doctorsDiv.appendChild(doctorBlock);
+              }
+            });
+          }
+
+               
+            
           }
           else
           {
@@ -136,3 +145,22 @@ function createDoctorBlock(name, workplace, specialization) {
 }
   
 });
+
+
+
+/*
+                  // Запитати дані з БД
+                  let response = await connectBdForGiveData(
+                    `SELECT * FROM doctorfam.patient WHERE id=${i};`)
+                  .then((response) => {
+                  let data = JSON.parse(response); // Преобразовать ответ в JSON
+
+                  // Перевірити, чи дані існують
+                  if (data[0]) {
+                    var doctorBlock = createDoctorBlock(
+                      data[0].name, // Замінити "Лікар 1" на ім'я лікаря з БД
+                      data[0].clinic, // Замінити "Поліклініка 1" на назву клініки з БД
+                      data[0].specialization // Замінити "Спеціалізація 1" на спеціалізацію з БД
+                    );
+                  }
+*/
