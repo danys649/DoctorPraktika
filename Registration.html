@@ -47,14 +47,19 @@
                  </div>
                  <span> Або увійдіть за допомогою Email</span>
                  <label>
-                    <h1 style="visibility: hidden;" id="ErrorInPut">Ошибка входа</h1>
+                    <h1 style="visibility: hidden;" id="ErrorInPut">Помилка входу</h1>
                      <input type="text" placeholder="Email" id ="login"/><!-- Вход уже зарегестрированого пользователя -->
                  </label>
                  <label>
                      <input type="password" placeholder="Password" id ="password"/>
                  </label>
-                 <a href="#">Forgot your password?</a>
-                 <button id="signIN">Sign In</button>
+                 <a href="#">Забули пароль?</a>
+                 <label class="checkbox-container">
+                    <input type="checkbox" id="isDoctor" />
+                    <span class="checkmark"></span>
+                    <span class="checkbox-label">Я лікар</span>
+                </label>
+                 <button id="signIN">Увійти</button>
              </form>
          </div>
          <div class="overlay-container">
