@@ -1,5 +1,5 @@
 import { connectBdForGiveData } from "/BD/BDadditionally.js"; //имортируем функцию соединение с БД для передачи данных
-//import { getLastCount } from "/Registration/JSregistration.js"; //имортируем ID клиента
+
 const backButton = document.getElementById("backButton");
 
   backButton.addEventListener("click", () => {

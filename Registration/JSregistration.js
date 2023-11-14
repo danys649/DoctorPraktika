@@ -54,9 +54,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
   });
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
-
+  //вход
   signINButton.addEventListener("click", (event) => {
-    //вход
     event.preventDefault();
     console.log("начало");
     let login = document.getElementById("login").value;
@@ -67,8 +66,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
       if (isDoctor) {
         // Перенаправляем на интерфейс врача
         connectBdForGiveData(
-          `SELECT id FROM doctorfam.patient WHERE surname = '${login}' AND name = '${password}' LIMIT 1;`//Изменить скипт 
-        )
+          `SELECT log_and_passwordcol FROM doctorfam.log_and_password WHERE login ='${login}' AND password = '${password}' ;`) //изменить
           .then((response) => {
             let data = JSON.parse(response); // Преобразовать ответ в JSON
             if (data[0]) {
@@ -88,17 +86,14 @@ window.addEventListener("DOMContentLoaded", (event) => {
             console.error("Произошла ошибка: ", error);
             document.getElementById("ErrorInPut").style.visibility = "visible";
           });
-      } 
-      else 
-      {
+      } else {
         // Перенаправляем на интерфейс клиента
         connectBdForGiveData(
-          `SELECT id FROM doctorfam.patient WHERE surname = '${login}' AND name = '${password}' LIMIT 1;`
-        )
+          `SELECT log_and_passwordcol FROM doctorfam.log_and_password WHERE login ='${login}' AND password = '${password}' LIMIT 1;`)
           .then((response) => {
             let data = JSON.parse(response); // Преобразовать ответ в JSON
             if (data[0]) {
-              let count = data[0]["id"]; // Извлечь число
+              let count = data[0]["log_and_passwordcol"]; // Извлечь число
               console.log("Ответ сервера: ", count);
               localStorage.setItem("exportedCount", count); // Сохранить count в глобальной переменной
               if (count > 0) {
@@ -106,7 +101,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 location.href = "Home.html"; // Перейти на новую страницу 'Home.html'
               }
             } else {
-              document.getElementById("ErrorInPut").style.visibility ="visible";
+              document.getElementById("ErrorInPut").style.visibility =
+                "visible";
             }
           })
           .catch((error) => {
@@ -114,12 +110,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
             document.getElementById("ErrorInPut").style.visibility = "visible";
           });
       }
-    }
-    catch (Exception)
-    {
+    } catch (Exception) {
       console.error(Exception);
       document.getElementById("ErrorInPut").style.visibility = "visible";
     }
   });
-
 });
