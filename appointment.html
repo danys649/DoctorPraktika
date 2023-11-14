@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Запись к врачу</title>
+    <link rel="stylesheet" href="appointmentFolder\appointment.css">
+     <script  type="module" src="appointmentFolder\appointment.js"></script>
+</head>
+<body>
+<!-- начало блока загрузки -->
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
+    <!-- конец блока загрузки -->
+    <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+    <div class="content">
+    <div class="doctor-info">
+        <img src="doctor.image" alt="Фото лікаря">
+        <div>
+            <h2>Прізвище ім'я по-батькові </h2>
+            <p>Місце роботи:</p>
+            <p>Спеціалізація:</p>
+            <button onclick="toggleCalendar()">Записатися на прийом</button>
+            <div id="calendar">
+                <label for="appointmentDate">Оберіть дату та час:</label>
+                <input type="datetime-local" id="appointmentDate" name="appointmentDate">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="confirmationCheckbox">
+                    <label for="confirmationCheckbox">Підтверджую запис</label>
+                </div>
+            
+                <button class="confirm-button" onclick="confirmAppointment()">Підтвердити запис</button>
+            </div>
+            <button class="go-back" id="backButton" onclick="goBack()">Назад</button> 
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

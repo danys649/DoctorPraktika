@@ -1,3 +1,6 @@
+var selectedDoctorIndex = localStorage.getItem("exportedCount");
+console.log("Index client or doctor: " + selectedDoctorIndex);
+
 document.addEventListener("DOMContentLoaded", function () {
   const daysContainer = document.getElementById("days-container");
   const patientInfoContainer = document.getElementById("patient-info");

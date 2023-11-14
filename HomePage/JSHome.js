@@ -1,4 +1,8 @@
 import { connectBdForGiveData } from "/BD/BDadditionally.js"; //имортируем функцию соединение с БД для передачи данных
+
+var selectedDoctorIndex = localStorage.getItem("exportedCount");
+console.log("Index client or doctor: "+ selectedDoctorIndex);
+
 document.addEventListener("DOMContentLoaded", function () {
   var searchButton = document.getElementById("searchButton");
   var doctorsDiv = document.getElementById("doctors");
@@ -46,23 +50,22 @@ document.addEventListener("DOMContentLoaded", function () {
            
           for (let i = 1; i <= count; i++) {
             connectBdForGiveData(
-              `SELECT name FROM doctorfam.patient WHERE id=${i};`
+              `SELECT ID, name, surname FROM doctorfam.patient WHERE id=${i};`
             ).then((response) => {
               let data = JSON.parse(response); // Преобразовать ответ в JSON
               console.log("DATA = " + JSON.stringify(data));
               if (data[0]) {
                 var doctorBlock = createDoctorBlock(
                   data[0].name, // Заменить "Лікар 1" на имя врача из БД
-                  "Поліклініка 1",
-                  "Спеціалізація 1"
+                  data[0].surname,
+                  data[0].ID,
+                  data[0].ID
                 );
                 doctorsDiv.appendChild(doctorBlock);
               }
             });
           }
 
-               
-            
           }
           else
           {
@@ -76,33 +79,17 @@ document.addEventListener("DOMContentLoaded", function () {
         filterPrompt.style.display = 'block';*/
   
   
-/*
-        // Создаем блоки с информацией о врачах и добавляем их
-        var doctorBlock1 = createDoctorBlock('Лікар 1', 'Поліклініка 1', 'Спеціалізація 1');
-        var doctorBlock2 = createDoctorBlock('Лікар 2', 'Поліклініка 2', 'Спеціалізація 2');
-        var doctorBlock3 = createDoctorBlock(
-          "Лікар 3",
-          "Поліклініка 2",
-          "Спеціалізація 2"
-        );
-
-        
-        doctorsDiv.appendChild(doctorBlock2);
-        doctorsDiv.appendChild(doctorBlock3);
-
-        // Скрываем текст "Выберите фильтры для поиска врачей"
-        filterPrompt.style.display = 'none';
-    } else {
-        // Показываем текст "Выберите фильтры для поиска врачей"
-        filterPrompt.style.display = 'block';
-    }*/
        }
       
     });
 ;
 
+
+
 // Функция для создания блока с информацией о враче
-function createDoctorBlock(name, workplace, specialization) {
+function createDoctorBlock(name, workplace, specialization, ID) 
+{
+   
     var doctorBlock = document.createElement('div');
     doctorBlock.className = 'doctor';
 
@@ -128,7 +115,7 @@ function createDoctorBlock(name, workplace, specialization) {
     doctorBlock.appendChild(doctorImage);
     doctorBlock.appendChild(doctorDetails);
     var doctorLink = document.createElement('a');
-    doctorLink.href = 'запись на приём.html';
+   //doctorLink.href = "appointment.html";
     doctorLink.appendChild(doctorName);
             doctorLink.appendChild(workplaceInfo);
             doctorLink.appendChild(specializationInfo);
@@ -140,27 +127,15 @@ function createDoctorBlock(name, workplace, specialization) {
             doctorBlock.appendChild(doctorImage);
             doctorBlock.appendChild(doctorDetails);
 
-
+  doctorBlock.addEventListener("click", function () {
+    console.log("Function change doctor work!");
+    // Сохраняем индекс врача в localStorage
+    localStorage.setItem("selectedDoctorIndex", ID);
+    // Перенаправляем на следующую страницу
+    window.location.href = "appointment.html";
+  });
     return doctorBlock;
 }
-  
 });
 
 
-
-/*
-                  // Запитати дані з БД
-                  let response = await connectBdForGiveData(
-                    `SELECT * FROM doctorfam.patient WHERE id=${i};`)
-                  .then((response) => {
-                  let data = JSON.parse(response); // Преобразовать ответ в JSON
-
-                  // Перевірити, чи дані існують
-                  if (data[0]) {
-                    var doctorBlock = createDoctorBlock(
-                      data[0].name, // Замінити "Лікар 1" на ім'я лікаря з БД
-                      data[0].clinic, // Замінити "Поліклініка 1" на назву клініки з БД
-                      data[0].specialization // Замінити "Спеціалізація 1" на спеціалізацію з БД
-                    );
-                  }
-*/
