@@ -1,7 +1,7 @@
 import { connectBdForGiveData } from "/BD/BDadditionally.js"; //имортируем функцию соединение с БД для передачи данных
 
 var selectedDoctorIndex = localStorage.getItem("exportedCount");
-console.log("Index client or doctor: "+ selectedDoctorIndex);
+console.log("Index client or doctor: "+ selectedDoctorIndex);//индекс входящего
 
 document.addEventListener("DOMContentLoaded", function () {
   var searchButton = document.getElementById("searchButton");
@@ -38,41 +38,37 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("Получаем количестов докторов!");
        // получаем количество докторов
    
-     connectBdForGiveData(`SELECT COUNT(*) FROM doctorfam.patient;`) 
-     .then((response) => {
-        let data = JSON.parse(response); // Преобразовать ответ в JSON
-        if (data[0]) 
-        {
-          let count = data[0]["COUNT(*)"]; // Извлечь число
-          console.log("Ответ сервера: ", count);
-          if (count > 0) 
-          {
-           
-          for (let i = 1; i <= count; i++) {
-            connectBdForGiveData(
-              `SELECT ID, name, surname FROM doctorfam.patient WHERE id=${i};`
-            ).then((response) => {
-              let data = JSON.parse(response); // Преобразовать ответ в JSON
-              console.log("DATA = " + JSON.stringify(data));
-              if (data[0]) {
-                var doctorBlock = createDoctorBlock(
-                  data[0].name, // Заменить "Лікар 1" на имя врача из БД
-                  data[0].surname,
-                  data[0].ID,
-                  data[0].ID
-                );
-                doctorsDiv.appendChild(doctorBlock);
-              }
-            });
-          }
-
-          }
-          else
-          {
+     connectBdForGiveData(`SELECT COUNT(*) FROM doctorfam.doctor;`)
+     .then(
+       (response) => {
+         let data = JSON.parse(response); // Преобразовать ответ в JSON
+         if (data[0]) {
+           let count = data[0]["COUNT(*)"]; // Извлечь число
+           console.log("Ответ сервера: ", count);
+           if (count > 0) {
+             for (let i = 1; i <= count; i++) {
+               connectBdForGiveData(
+                 `SELECT ID, name, sername FROM doctorfam.doctor WHERE id=${i};`
+               ).then((response) => {
+                 let data = JSON.parse(response); // Преобразовать ответ в JSON
+                 console.log("DATA = " + JSON.stringify(data));
+                 if (data[0]) {
+                   var doctorBlock = createDoctorBlock(
+                     data[0].name, // Заменить "Лікар 1" на имя врача из БД
+                     data[0].surname,
+                     data[0].ID,
+                     data[0].ID
+                   );
+                   doctorsDiv.appendChild(doctorBlock);
+                 }
+               });
+             }
+           } else {
              //если врачей не будет найдено
-          }
-        }
-      });
+           }
+         }
+       }
+     );
 
       /*else {
         // Показываем текст "Выберите фильтры для поиска врачей"
@@ -130,7 +126,7 @@ function createDoctorBlock(name, workplace, specialization, ID)
   doctorBlock.addEventListener("click", function () {
     console.log("Function change doctor work!");
     // Сохраняем индекс врача в localStorage
-    localStorage.setItem("selectedDoctorIndex", ID);
+    localStorage.setItem("selectedDoctorIndexChange", ID);
     // Перенаправляем на следующую страницу
     window.location.href = "appointment.html";
   });

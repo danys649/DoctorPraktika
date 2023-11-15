@@ -24,7 +24,7 @@
             <h2 id = "NameDoctor"></h2>
             <p id="location"></p>
             <p>Спеціалізація:</p>
-            <button onclick="toggleCalendar()">Записатися на прийом</button>
+            <button id= "AppointmentСonfirmation">Записатися на прийом</button>
             <div id="calendar">
                 <label for="appointmentDate">Оберіть дату та час:</label>
                 <input type="datetime-local" id="appointmentDate" name="appointmentDate">
@@ -33,7 +33,7 @@
                     <label for="confirmationCheckbox">Підтверджую запис</label>
                 </div>
             
-                <button class="confirm-button" id="AppointmentСonfirmation">Підтвердити запис</button>
+                <button class="confirm-button" id="ConfirmButton">Підтвердити запис</button>
             </div>
             <button class="go-back" id="backButton">Назад</button> 
         </div>

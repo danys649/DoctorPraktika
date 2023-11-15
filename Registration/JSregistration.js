@@ -70,7 +70,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
           .then((response) => {
             let data = JSON.parse(response); // Преобразовать ответ в JSON
             if (data[0]) {
-              let count = data[0]["id"]; // Извлечь число
+              let count = data[0]["log_and_passwordcol"]; // Извлечь число
               console.log("Ответ сервера: ", count);
               localStorage.setItem("exportedCount", count); // Сохранить count в глобальной переменной
               if (count > 0) {
