@@ -124,7 +124,7 @@ a {
 }
 
 .social-container a {
-    border: 1px solid #008ecf;
+    border: 1px solid #015871;
     border-radius: 50%;
     display: inline-flex;
     justify-content: center;
@@ -156,8 +156,8 @@ a {
 button {
     border-radius: 50px;
     box-shadow: 0 1px 1px;
-    border: 1px solid #008ecf;
-    background: #008ecf;
+    border: 1px solid #015871;
+    background: #015871;
     color: #fff;
     font-size: 12px;
     font-weight: bold;
@@ -213,7 +213,7 @@ button.ghost {
 
 .overlay {
     background: #ff416c;
-    background: linear-gradient(to right, #008ecf, #008ecf) no-repeat 0 0;
+    background: linear-gradient(to right, #015871, #015871) no-repeat 0 0;
     color: #fff;
     position: relative;
     left: -100%;

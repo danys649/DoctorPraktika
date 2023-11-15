@@ -21,38 +21,36 @@ window.addEventListener("DOMContentLoaded", (event) => {
     let loginReg = document.getElementById("loginReg").value;
     let emailReg = document.getElementById("emailReg").value;
     let passwordReg = document.getElementById("passwordReg").value;
-    try {
-      connectBdForGiveData(
-        `INSERT INTO doctorfam.patient (ID, surname, name) VALUES ('${emailReg}', '${loginReg}', '${passwordReg}');`
-      );
-
-      connectBdForGiveData(
-        `SELECT id FROM doctorfam.patient WHERE surname = '${loginReg}' AND name = '${passwordReg}' LIMIT 1;`
-      )
-        .then((response) => {
-          let data = JSON.parse(response); // Преобразовать ответ в JSON
-          if (data[0]) {
-            let count = data[0]["id"]; // Извлечь число
-            console.log("Ответ сервера: ", count);
-            localStorage.setItem("exportedCount", count); // Сохранить count в глобальной переменной
-            if (count > 0) {
-              document.body.innerHTML = ""; // Удалить текущий HTML
-              location.href = "profile.html"; // Перейти на новую страницу 'Home.html'
-            }
-          } else {
-            document.getElementById("ErrorInPut").style.visibility = "visible";
+   try {
+    connectBdForGiveData(`START TRANSACTION;`);
+    connectBdForGiveData(`INSERT INTO doctorfam.log_and_password (login, password, rol_ID) VALUES ('${loginReg}', '${passwordReg}', '2');`);
+    connectBdForGiveData(`SET @last_id_in_log_and_password = LAST_INSERT_ID();`);
+    connectBdForGiveData(`INSERT INTO patient (log_and_password_ID, surname) VALUES (@last_id_in_log_and_password, '${emailReg}');`);
+    connectBdForGiveData(`SELECT ID FROM doctorfam.patient WHERE log_and_password_ID = @last_id_in_log_and_password LIMIT 1;`)
+    .then((response) => {
+        let data = JSON.parse(response); // Преобразовать ответ в JSON
+        if (data[0]) {
+          let count = data[0]["ID"]; // Извлечь число
+          console.log("Ответ сервера: ", count);
+          localStorage.setItem("exportedCount", count); // Сохранить count в глобальной переменной
+          if (count > 0) {
+            document.body.innerHTML = ""; // Удалить текущий HTML
+            location.href = "profile.html"; // Перейти на новую страницу 'Home.html'
           }
-        })
-        .catch((error) => {
-          console.error("Произошла ошибка: ", error);
+        } else {
           document.getElementById("ErrorInPut").style.visibility = "visible";
-        });
+        }
+      })
+      .catch((error) => {
+        console.error("Произошла ошибка: ", error);
+        document.getElementById("ErrorInPut").style.visibility = "visible";
+      });
     } catch (Exception) {
       console.error(Exception);
       document.getElementById("ErrorInPut").style.visibility = "visible";
     }
   });
-
+ connectBdForGiveData(`COMMIT;`);
   /////////////////////////////////////////////////////////////////////////////////////////////////
   //вход
   signINButton.addEventListener("click", (event) => {
@@ -65,17 +63,18 @@ window.addEventListener("DOMContentLoaded", (event) => {
       var isDoctor = document.getElementById("isDoctor").checked;
       if (isDoctor) {
         // Перенаправляем на интерфейс врача
-        connectBdForGiveData(
-          `SELECT log_and_passwordcol FROM doctorfam.log_and_password WHERE login ='${login}' AND password = '${password}' ;`) //изменить
+         connectBdForGiveData(`SELECT ID FROM doctorfam.log_and_password WHERE login = '${login}' AND password = '${password}' AND rol_ID = '1';`);
+         connectBdForGiveData(`SET @last_id_in_log_and_password = LAST_INSERT_ID();`);
+         connectBdForGiveData(`SELECT ID FROM doctorfam.doctor WHERE log_and_password_ID = @last_id_in_log_and_password LIMIT 1;`)
           .then((response) => {
             let data = JSON.parse(response); // Преобразовать ответ в JSON
             if (data[0]) {
-              let count = data[0]["log_and_passwordcol"]; // Извлечь число
+              let count = data[0]["ID"]; // Извлечь число
               console.log("Ответ сервера: ", count);
               localStorage.setItem("exportedCount", count); // Сохранить count в глобальной переменной
               if (count > 0) {
                 document.body.innerHTML = ""; // Удалить текущий HTML
-                location.href = "HomeDoctor.html"; // Перейти на новую страницу 'Home.html'
+              //  location.href = "HomeDoctor.html"; // Перейти на новую страницу 'Home.html'
               }
             } else {
               document.getElementById("ErrorInPut").style.visibility =
