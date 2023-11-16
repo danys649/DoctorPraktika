@@ -38,7 +38,7 @@ ConfirmButton.addEventListener("click", () => {
             var selectedDoctorIndexChange = localStorage.getItem("selectedDoctorIndexChange");
             console.log("Index change doctor: " + selectedDoctorIndexChange);
             connectBdForGiveData(
-              `SELECT ID, name, surname FROM doctorfam.patient WHERE id=${selectedDoctorIndex};`
+              `SELECT ID, name, surname FROM doctorfam.doctor WHERE id=${selectedDoctorIndex};`
             ).then((response) => {
               let data = JSON.parse(response); // Преобразовать ответ в JSON
               console.log("DATA = " + JSON.stringify(data));
@@ -82,7 +82,7 @@ AppointmentСonfirmation.addEventListener("click", () => {
 var selectedDoctorIndexChange = localStorage.getItem("selectedDoctorIndexChange");
 console.log("Index change doctor: " + selectedDoctorIndexChange);
 connectBdForGiveData(
-  `SELECT ID, name, surname FROM doctorfam.patient WHERE id=${selectedDoctorIndexChange};`
+  `SELECT ID, name, surname FROM doctorfam.doctor WHERE id=${selectedDoctorIndexChange};`
 ).then((response) => {
   let data = JSON.parse(response); // Преобразовать ответ в JSON
   console.log("DATA = " + JSON.stringify(data));

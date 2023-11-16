@@ -1,7 +1,7 @@
 import { connectBdForGiveData } from "/BD/BDadditionally.js"; //имортируем функцию соединение с БД для передачи данных
 
 var selectedDoctorIndex = localStorage.getItem("exportedCount");
-console.log("Index client or doctor: "+ selectedDoctorIndex);//индекс входящего
+console.log("Index client : "+ selectedDoctorIndex);//индекс входящего
 
 document.addEventListener("DOMContentLoaded", function () {
   var searchButton = document.getElementById("searchButton");
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
            if (count > 0) {
              for (let i = 1; i <= count; i++) {
                connectBdForGiveData(
-                 `SELECT ID, name, sername FROM doctorfam.doctor WHERE id=${i};`
+                 `SELECT ID, name, surname FROM doctorfam.doctor WHERE id=${i};`
                ).then((response) => {
                  let data = JSON.parse(response); // Преобразовать ответ в JSON
                  console.log("DATA = " + JSON.stringify(data));
