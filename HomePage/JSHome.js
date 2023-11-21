@@ -1,7 +1,7 @@
 import { connectBdForGiveData } from "/BD/BDadditionally.js"; //имортируем функцию соединение с БД для передачи данных
 
-var selectedDoctorIndex = localStorage.getItem("exportedCount");
-console.log("Index client : "+ selectedDoctorIndex);//индекс входящего
+var selectedClientIndex = localStorage.getItem("exportedCount");
+console.log("Index client : "+ selectedClientIndex);//индекс входящего клиента
 
 document.addEventListener("DOMContentLoaded", function () {
   var searchButton = document.getElementById("searchButton");
@@ -57,71 +57,65 @@ document.addEventListener("DOMContentLoaded", function () {
                      data[0].name, // Заменить "Лікар 1" на имя врача из БД
                      data[0].surname,
                      data[0].ID,
-                     data[0].ID
+                     data[0].ID,
                    );
                    doctorsDiv.appendChild(doctorBlock);
                  }
                });
              }
-           } else {
+           } 
+           else 
+           {
              //если врачей не будет найдено
            }
          }
        }
      );
-
       /*else {
         // Показываем текст "Выберите фильтры для поиска врачей"
         filterPrompt.style.display = 'block';*/
-  
-  
        }
-      
-    });
-;
-
+    });;
 
 
 // Функция для создания блока с информацией о враче
-function createDoctorBlock(name, workplace, specialization, ID) 
-{
-   
-    var doctorBlock = document.createElement('div');
-    doctorBlock.className = 'doctor';
+function createDoctorBlock(name, workplace, specialization, ID, doctorImage)
+ {
+  var doctorBlock = document.createElement("div");
+  doctorBlock.className = "doctor";
 
-    var doctorImage = document.createElement('div');
-    doctorImage.className = 'doctor-image';
+  var doctorImage = document.createElement("div");
+  doctorImage.className = "doctor-image";
 
-    var doctorDetails = document.createElement('div');
-    doctorDetails.className = 'doctor-details';
+  var doctorDetails = document.createElement("div");
+  doctorDetails.className = "doctor-details";
 
-    var doctorName = document.createElement('h3');
-    doctorName.textContent = name;
+  var doctorName = document.createElement("h3");
+  doctorName.textContent = name;
 
-    var workplaceInfo = document.createElement('p');
-    workplaceInfo.textContent = 'Місце роботи: ' + workplace;
+  var workplaceInfo = document.createElement("p");
+  workplaceInfo.textContent = "Місце роботи: " + workplace;
 
-    var specializationInfo = document.createElement('p');
-    specializationInfo.textContent = 'Спеціалізація: ' + specialization;
+  var specializationInfo = document.createElement("p");
+  specializationInfo.textContent = "Спеціалізація: " + specialization;
 
-    doctorDetails.appendChild(doctorName);
-    doctorDetails.appendChild(workplaceInfo);
-    doctorDetails.appendChild(specializationInfo);
+  doctorDetails.appendChild(doctorName);
+  doctorDetails.appendChild(workplaceInfo);
+  doctorDetails.appendChild(specializationInfo);
 
-    doctorBlock.appendChild(doctorImage);
-    doctorBlock.appendChild(doctorDetails);
-    var doctorLink = document.createElement('a');
-   //doctorLink.href = "appointment.html";
-    doctorLink.appendChild(doctorName);
-            doctorLink.appendChild(workplaceInfo);
-            doctorLink.appendChild(specializationInfo);
+  doctorBlock.appendChild(doctorImage);
+  doctorBlock.appendChild(doctorDetails);
+  var doctorLink = document.createElement("a");
+  doctorLink.appendChild(doctorName);
+  doctorLink.appendChild(workplaceInfo);
+  doctorLink.appendChild(specializationInfo);
 
-            // Добавляем блок ссылки в блок деталей
-            doctorDetails.appendChild(doctorLink);
+  // Добавляем блок ссылки в блок деталей
+  doctorDetails.appendChild(doctorLink);
 
-            // Добавляем блок изображения и блок деталей в основной блок врача
-            doctorBlock.appendChild(doctorImage);
-            doctorBlock.appendChild(doctorDetails);
+  // Добавляем блок изображения и блок деталей в основной блок врача
+  doctorBlock.appendChild(doctorImage);
+  doctorBlock.appendChild(doctorDetails);
 
   doctorBlock.addEventListener("click", function () {
     console.log("Function change doctor work!");
@@ -130,7 +124,7 @@ function createDoctorBlock(name, workplace, specialization, ID)
     // Перенаправляем на следующую страницу
     window.location.href = "appointment.html";
   });
-    return doctorBlock;
+  return doctorBlock;
 }
 });
 

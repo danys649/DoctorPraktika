@@ -4,6 +4,8 @@ const AppointmentСonfirmation = document.getElementById("AppointmentСonfirmati
 const ConfirmButton = document.getElementById("ConfirmButton");
 var confirmationCheckbox = document.getElementById("confirmationCheckbox");
 
+var selectedClientIndex = localStorage.getItem("exportedCount");
+console.log("Index client : "+ selectedClientIndex);//индекс входящего клиента
 
 //кнопка назад
 backButton.addEventListener("click", () => {
@@ -29,34 +31,16 @@ confirmationCheckbox.addEventListener("change", () => {
 ConfirmButton.addEventListener("click", () => {
      if (appointmentDate.value !== "") 
      {
-         if (confirmationCheckbox.checked) {
+         if (confirmationCheckbox.checked) 
+         {
            alert("Запис підтверджена на " + appointmentDate.value);
-
-
-            
-            console.log("Index change client: " + selectedDoctorIndex);
-            var selectedDoctorIndexChange = localStorage.getItem("selectedDoctorIndexChange");
-            console.log("Index change doctor: " + selectedDoctorIndexChange);
-            connectBdForGiveData(
-              `SELECT ID, name, surname FROM doctorfam.doctor WHERE id=${selectedDoctorIndex};`
-            ).then((response) => {
-              let data = JSON.parse(response); // Преобразовать ответ в JSON
-              console.log("DATA = " + JSON.stringify(data));
-              if (data[0]) {
-                var nameElement = document.getElementById("NameDoctor");
-                var locationElement = document.getElementById("location");
-
-                // Обновить текст элементов
-                nameElement.textContent = data[0].name;
-                locationElement.textContent = data[0].surname;
-              }
-            });
-
-
-
-
-
-
+           console.log("Index client : " + selectedClientIndex); //индекс входящего клиента
+           var selectedDoctorIndexChange = localStorage.getItem("selectedDoctorIndexChange");
+           console.log("Index change doctor: " + selectedDoctorIndexChange);//индекс выбраного доктора
+           connectBdForGiveData(
+             `INSERT INTO doctorfam.appointment (dateAndTime, doctor_ID, patient_ID) 
+              VALUES (STR_TO_DATE('${appointmentDate.value}', '%Y-%m-%dT%H:%i'), ${selectedDoctorIndexChange}, ${selectedClientIndex});`
+           );
          } 
          else 
          {
