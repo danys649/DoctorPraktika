@@ -148,11 +148,10 @@ window.addEventListener("click", function (event) {
     }
   });
 
-/*
+
 
    document.addEventListener("DOMContentLoaded", (event) => {
-    var doctorsDiv = document.getElementById("patientlist");
-        doctorsDiv.innerHTML = "";
+
      connectBdForGiveData(`SELECT COUNT(*) FROM doctorfam.appointment
     WHERE doctor_ID = '2';`).then((response) => {
        let data = JSON.parse(response); // Преобразовать ответ в JSON
@@ -162,20 +161,21 @@ window.addEventListener("click", function (event) {
          if (count > 0) {
            for (let i = 1; i <= count; i++) {
              connectBdForGiveData(
-               `SELECT patient_ID, doctor_ID FROM doctorfam.appointment
-              WHERE doctor_ID = '2';`
+               `SELECT patient.name, patient.surname
+FROM doctorfam.appointment 
+JOIN doctorfam.patient 
+ON appointment.patient_ID = patient.ID
+WHERE appointment.doctor_ID = '2';`
              ).then((response) => {
                let data = JSON.parse(response); // Преобразовать ответ в JSON
                console.log("DATA = " + JSON.stringify(data));
                if (data[0]) {
-                 var doctorBlock = createPatientBlock(
-                   data[0].patient_ID,
-                   data[0].doctor_ID
-                   //data[0].ID,
-                   // data[0].ID
-                 );
-
-                 doctorsDiv.appendChild(doctorBlock);
+                 var patientData = {
+                   name: data[0].name,
+                   info: data[0].surname // Замените это на реальную информацию о пациенте
+                 };
+                 var patientBlock = createPatientBlock(patientData);
+                 patientList.appendChild(patientBlock);
                }
              });
            }
@@ -186,8 +186,8 @@ window.addEventListener("click", function (event) {
      });
 
     
-   });*/
-
+   });
+/*
 var patientData = {
   name: "Іван Іванович",
   info: "65 років, група крові A+",
@@ -195,7 +195,14 @@ var patientData = {
 
 var patientBlock = createPatientBlock(patientData);
 document.body.appendChild(patientBlock);
+var patientData = {
+  name: "Іван Іванович",
+  info: "67 років, група крові A+",
+};
 
+var patientBlock = createPatientBlock(patientData);
+document.body.appendChild(patientBlock);
+*/
    function createPatientBlock(patientData) {
      // Створюємо головний блок пацієнта
      var patientDiv = document.createElement("div");

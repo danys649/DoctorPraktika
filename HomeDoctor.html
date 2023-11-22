@@ -38,30 +38,28 @@
         </div>
 </div>
     </div>
-    
 
-    <div class="patientlist" id="patient-list">
-        
-        <!-- Список пациентов -->
-        <h2>Список паціентів на сьогодні</h2>
-         <div class="scrollable-container">
-        <!-- Добавьте остальных пациентов -->
+    <div class="patientlist" id="patient-list-container">
+         <!-- Список пациентов -->
+          <h2>Список пациентов на сегодня</h2>
+          <div id="patientList" class="patientList">  
     </div>
 </div>
-    <div class="Calendar" id="calendar">
-        <!-- Календарь -->
-        <h2>Календар онлайн записів</h2>
-        <button class="open-CalendarBtn" id="openCalendarBtn">Відкрити календар</button>
-        <div id="calendarModal" class="modal">
-            <div class="modal-content">
-                <span class="close" id="closeCalendarBtn">&times;</span>
-                <h3>Оберіть дату</h3>
-                <div id="days-container"></div>
-            </div>
-        </div>
-        <div id="patient-info"></div>
-    </div>
 
+
+<div class="Calendar" id="calendar">
+    <!-- Календарь -->
+    <h2>Календар онлайн записів</h2>
+    <button class="open-CalendarBtn" id="openCalendarBtn">Відкрити календар</button>
+    <div id="calendarModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeCalendarBtn">&times;</span>
+            <h3>Оберіть дату</h3>
+            <div id="days-container"></div>
+        </div>
+    </div>
+    <div id="patient-info"></div>
+</div>
 </body>
 
 </html>

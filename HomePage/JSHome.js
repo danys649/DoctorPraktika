@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
                  console.log("DATA = " + JSON.stringify(data));
                  if (data[0]) {
                    var doctorBlock = createDoctorBlock(
-                     data[0].name, // Заменить "Лікар 1" на имя врача из БД
+                     data[0].name, 
                      data[0].surname,
                      data[0].ID,
                      data[0].ID,
