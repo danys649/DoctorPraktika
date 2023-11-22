@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var searchButton = document.getElementById("searchButton");
   var doctorsDiv = document.getElementById("doctors");
   var filterPrompt = document.getElementById("filterPrompt");
-  //var pageTitle = document.getElementById("pageTitle");
   let myCardButton = document.getElementById("myCardButton");
   let showAllButton = document.getElementById("showAllButton");
 

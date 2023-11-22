@@ -5,7 +5,7 @@
         <title>Медицинская страница</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="DoctorHome\HomeDoctor.css">
-        <script  src="DoctorHome\HomeDoctor.js"></script>
+        <script type="module" src="DoctorHome\HomeDoctor.js"></script>
     </head>
 
 <body>
@@ -39,24 +39,15 @@
 </div>
     </div>
     
+
     <div class="patientlist" id="patient-list">
+        
         <!-- Список пациентов -->
         <h2>Список паціентів на сьогодні</h2>
-        <div class="patient">
-            <div class="patient-info">
-                <span>Паціент 1 - Інформація</span>
-            </div>
-            <a href="Page404.html"><button onclick="showPatientCard('Паціент 1')">Картка</button></a>
-        </div>
-        <div class="patient">
-            <div class="patient-info">
-                <span>Паціент 2 - Інформація</span>
-            </div>
-            <a href="Page404.html"> <button onclick="showPatientCard('Паціент 2')">Картка</button></a>
-        </div>
+         <div class="scrollable-container">
         <!-- Добавьте остальных пациентов -->
     </div>
-
+</div>
     <div class="Calendar" id="calendar">
         <!-- Календарь -->
         <h2>Календар онлайн записів</h2>

@@ -105,8 +105,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
          YOB = STR_TO_DATE('${dob}', '%Y-%m-%d')
          WHERE (ID = '${selectedClientIndex}');`
       );
-      // document.body.innerHTML = ""; // Удалить текущий HTML
-      //location.href = "Home.html"; // Перейти на новую страницу 'Home.html'
+       document.body.innerHTML = ""; // Удалить текущий HTML
+       location.href = "Home.html"; // Перейти на новую страницу 'Home.html'
     }
   });
 });
