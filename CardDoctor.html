@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Мед карта</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="cardDoc\cardDoctor.css">
+   <script  type="module" src="cardDoc\JScardDoctor.js"></script>
+
+</head>
+<body>
+  
+  <div id="patient-info">
+    <h2>Інформація про пацієнта</h2>
+    <form>
+      <label for="lastName">Прізвище:</label><br>
+      <input type="text" id="lastName" name="lastName" value="Ваше прізвище"><br><br>
+      <label for="firstName">Ім'я:</label><br>
+      <input type="text" id="firstName" name="firstName" value="Ваше ім'я"><br><br>
+      <label for="middleName">По-батькові:</label><br>
+      <input type="text" id="middleName" name="middleName" value="По-батькові"><br><br>
+      <label for="dob">Дата народження:</label><br>
+      <input type="date" id="dob" name="dob"><br><br>
+      <label for="city">Місто:</label><br>
+      <input type="text" id="city" name="city" value="Ваше місто"><br><br>
+      <label for="street">Вулиця:</label><br>
+      <input type="text" id="street" name="street" value="Ваша вулиця"><br><br>
+      <label for="houseNumber">Номер будинка:</label><br>
+      <input type="text" id="houseNumber" name="houseNumber" value="Номер будинка"><br><br>
+      <label for="apartmentNumber">Номер квартири:</label><br>
+      <input type="text" id="apartmentNumber" name="apartmentNumber" value="Номер квартири"><br><br>
+      <label>Стать:</label><br>
+      <input type="radio" id="male" name="gender" value="Мужской">
+      <label for="male">Мужской</label>
+      <input type="radio" id="female" name="gender" value="Женский">
+      <label for="female">Женский</label><br><br>
+    </form>
+    <button class="backButton" id="backButton">Назад на головну</button>
+  </div>
+
+  <div id="doctorAppointments">  
+    <h2>Прийоми у лікарів</h2>
+    <div style="text-align: center;" id="add-block-message">
+      <img src="c:\Users\mayh3\Downloads\pngwing.com.png." style="width: 100px; height: 100px;" alt="Изображение для добавления блока">
+      <h3>Тут поки немає записів</h3>
+    </div>
+    <button id="addAppointmentBtn" name="addAppointmentBtn">Добавити запис</button>
+  </div>
+
+</body>
+</html>

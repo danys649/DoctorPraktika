@@ -44,24 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
       dayElement.classList.add("has-appointments");
     }
   }
-/*
-  function displayPatientInfo() {
-    // функция для отображения информации о пациентах
-
-    patientInfoContainer.innerHTML = `<h3>Паціенти на ${day} число</h3>
-                                                  <div class="patient">
-                                                      <div class="patient-info">
-                                                          <span>Паціент 1 - Інформація</span>
-                                                      </div>
-                                                      <a href="404.html"> <button onclick="showPatientCard('Паціент 1')">Картка</button></a>
-                                                  </div>
-                                                  <div class="patient">
-                                                      <div class="patient-info">
-                                                          <span>Паціент 2 - Інформація</span>
-                                                      </div>
-                                                      <a href="404.html"> <button onclick="showPatientCard('Паціент 2')">Картка</button></a>
-                                                  </div>`;
-  }*/
 });
 /* Открытие и закрытие модального окна*/
 const openCalendarBtn = document.getElementById("openCalendarBtn");
@@ -161,18 +143,19 @@ window.addEventListener("click", function (event) {
          if (count > 0) {
            for (let i = 1; i <= count; i++) {
              connectBdForGiveData(
-               `SELECT patient.name, patient.surname
-FROM doctorfam.appointment 
-JOIN doctorfam.patient 
-ON appointment.patient_ID = patient.ID
-WHERE appointment.doctor_ID = '2';`
+               `SELECT patient.name, patient.surname, patient.ID
+                FROM doctorfam.appointment 
+                JOIN doctorfam.patient 
+                ON appointment.patient_ID = patient.ID
+                WHERE appointment.doctor_ID = '2';`
              ).then((response) => {
                let data = JSON.parse(response); // Преобразовать ответ в JSON
                console.log("DATA = " + JSON.stringify(data));
                if (data[0]) {
                  var patientData = {
                    name: data[0].name,
-                   info: data[0].surname // Замените это на реальную информацию о пациенте
+                   info: data[0].surname,
+                   ID: data[0].ID 
                  };
                  var patientBlock = createPatientBlock(patientData);
                  patientList.appendChild(patientBlock);
@@ -184,8 +167,6 @@ WHERE appointment.doctor_ID = '2';`
          }
        }
      });
-
-    
    });
 /*
 var patientData = {
@@ -230,6 +211,14 @@ document.body.appendChild(patientBlock);
      patientDiv.appendChild(patientInfoDiv);
      patientDiv.appendChild(patientButton);
 
+        patientList.addEventListener("click", function () {
+          console.log("Function change card work!");
+          // Сохраняем индекс врача в localStorage
+          localStorage.setItem("CardselectedDoctorIndexChange",patientData.ID);
+         
+          // Перенаправляем на следующую страницу
+          window.location.href = "CardDoctor.html";
+        });
      // Повертаємо головний блок пацієнта
      return patientDiv;
    }
