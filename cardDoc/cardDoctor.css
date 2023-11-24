@@ -5,7 +5,9 @@ body {
     padding: 20px;
     background: radial-gradient(ellipse at center, rgba(255, 254, 234, 1) 0%, rgba(255, 254, 234, 1) 35%, #015871 100%);
 }
-
+#textNoFound {
+    display: none;
+}
 #patient-info {
     /*блок с информацией о пациенте*/
     background: #fff;

@@ -1,7 +1,7 @@
 import { connectBdForGiveData } from "/BD/BDadditionally.js"; //имортируем функцию соединение с БД для передачи данных
 var cardSelectedDoctorIndex = localStorage.getItem("CardselectedDoctorIndexChange"); 
 console.log("card ID:" + cardSelectedDoctorIndex);
-var selectedClientIndex = localStorage.getItem("exportedCount");
+var selectedClientIndex = sessionStorage.getItem("exportedCount");
 console.log("Index  doctor : "+ selectedClientIndex);//индекс входящего клиента
 //кнопка назад
 const backButton = document.getElementById("backButton");
@@ -32,59 +32,109 @@ connectBdForGiveData(
 
 //получаем прошлые мед карточки
 connectBdForGiveData(`SELECT
-                        (SELECT COUNT(*) FROM doctorfam.appointment WHERE patient_ID= "2") as appointment_count, 
+                          (
+                              SELECT COUNT(*)
+                              FROM doctorfam.appointment
+                              WHERE patient_ID = "${cardSelectedDoctorIndex}"
+                          ) as appointment_count, 
                           d.name,
-                          d.surname
+                          a.ID,
+                          d.surname,
+                          a.dateandtime,
+                          a.description,
+                          a.medicine,
+                          p.surname as patient_surname
                       FROM 
                           doctorfam.doctor d
+                      JOIN 
+                          doctorfam.appointment a ON d.ID = a.doctor_ID
+                      JOIN
+                          doctorfam.patient p ON a.patient_ID = p.ID
                       WHERE 
-                          d.ID IN (
-                              SELECT 
-                                  a.doctor_ID
-                              FROM 
-                                  doctorfam.appointment a
-                              WHERE 
-                                  a.patient_ID="${cardSelectedDoctorIndex}");`).then(
-  (response) => {
-    let data = JSON.parse(response); // Преобразовать ответ в JSON
-    let count = data[0]["appointment_count"]; // Извлечь число
-    console.log("Count = " + count);
-    if (data[0]) {
-      let dataArray = [];
-      for (let i = 0; i < count; i++) {
-        dataArray.push({
-          name: data[i]["name"],
-          surname: data[i]["surname"],
-          // description: data[i]["description"],
-        });
+                          a.patient_ID = "${cardSelectedDoctorIndex}";
+`).then((response) => {
+  let data = JSON.parse(response); // Преобразовать ответ в JSON
+  let count = data[0]["appointment_count"]; // Извлечь число
+  console.log("Количество = " + count);
+  if (data[0]) {
+    let dataArray = [];
+    for (let i = 0; i < count; i++) {
+      let date, time;
+      if (data[i]["dateandtime"].includes("(")) {
+        // Format is "dd.mm.yy(HH:MM)"
+        let dateAndTime = data[i]["dateandtime"].split("(");
+        date = dateAndTime[0];
+        time = dateAndTime[1].slice(0, -1); // Remove the closing parenthesis
+      } else {
+        // Format is "yyyy-mm-dd HH:MM:SS"
+        let dateAndTime = data[i]["dateandtime"].split(" ");
+        date = dateAndTime[0];
+        time = dateAndTime[1].slice(0, 5); // Only take the HH:MM part
       }
-      createAppointmentBlocks(dataArray);
-    }
-  }
-);
 
+      let medicine = data[i]["medicine"] || "";
+      let description = data[i]["description"] || "";
+
+      // Check if medicine or description is null or empty
+      let isMedicineEditable = !(medicine && medicine.trim() !== "");
+
+      let isDescriptionEditable = !description || description.trim() === "";
+
+      dataArray.push({
+        name: data[i]["name"],
+        surname: data[i]["surname"],
+        date: date,
+        time: time,
+        medicine: medicine,
+        description: description,
+        isMedicineEditable: isMedicineEditable,
+        isDescriptionEditable: isDescriptionEditable,
+        ID: data[i]["ID"],
+      });
+    }
+    createAppointmentBlocks(dataArray);
+  } else {
+    var textNoFound = document.getElementById("textNoFound");
+    textNoFound.style.display = "block";
+  }
+});
 
 function createAppointmentBlocks(data) {
   for (let i = 0; i < data.length; i++) {
     let appointmentsContainer = document.getElementById("doctorAppointments");
     let newAppointmentBlock = document.createElement("div");
     newAppointmentBlock.className = "appointmentBlock";
-    newAppointmentBlock.innerHTML =
-      "<h3>Деталі прийому</h3>" +
-      '<p class="doctorName" id="doctorName">Лікар: ' +
-      data[i].name +
-      " " +
-      data[i].surname +
-      "</p>" +
-      '<button class="toggleBtn">Розгорнути</button>' +
-      '<div class="appointmentContent" style="display: none;">' +
-      '<p>Дата: <input type="date" class="appointment-date" disabled></p>' +
-      '<p>Час: <input type="time" class="appointment-time" disabled></p>' +
-      '<p>Призначені ліки: <input type="text" placeholder="Введіть назву ліків" class="appointment-medicine"></p>' +
-      '<p>Опис: <textarea placeholder="Введіть опис" class="appointmentDescription" id="appointmentDescription">' +
-      data[i].description +
-      "</textarea></p>" +
-      "</div>";
+   newAppointmentBlock.innerHTML =
+     "<h3>Деталі прийому</h3>" +
+     '<p class="doctorName" id="doctorName">Лікар: ' +
+     data[i].name +
+     " " +
+     data[i].surname +
+     "</p>" +
+     '<button class="toggleBtn">Розгорнути</button>' +
+     '<div class="appointmentContent" style="display: none;">' +
+     '<p>Дата: <input type="date" class="appointment-date" disabled value="' +
+     data[i].date +
+     '"></p>' +
+     '<p>Час: <input type="time" class="appointment-time" disabled value="' +
+     data[i].time +
+     '"></p>' +
+     '<p>Призначені ліки: <textarea placeholder="Введіть назву ліків" class="appointmentMedicine" id="appointmentMedicine"' +
+     (data[i].isMedicineEditable ? "" : " disabled") +
+     ">" +
+     data[i].medicine +
+     "</textarea></p>" +
+     '<p>Опис: <textarea placeholder="Введіть опис" class="appointmentDescription" id="appointmentDescription" ' +
+     (data[i].isDescriptionEditable ? "" : "disabled") +
+     ">" +
+     data[i].description +
+     "</textarea ></p>" +
+     (data[i].isMedicineEditable || data[i].isDescriptionEditable
+       ? '<button class="saveBtn">Зберегти</button>'
+       : "") +
+     "</div>";
+    newAppointmentBlock.dataset.appointmentId = data[i].ID;
+
     appointmentsContainer.appendChild(newAppointmentBlock);
 
     let toggleBtn = newAppointmentBlock.querySelector(".toggleBtn");
@@ -100,62 +150,22 @@ function createAppointmentBlocks(data) {
         appointmentContent.style.display = "none";
       }
     });
+
+    // Save button
+    let saveBtn = newAppointmentBlock.querySelector(".saveBtn");
+    if (saveBtn) {
+      saveBtn.addEventListener("click", function () {
+        let appointmentDescription = newAppointmentBlock.querySelector(".appointmentDescription").value;
+        let appointmentMedicine = newAppointmentBlock.querySelector(".appointmentMedicine").value;
+        let appointmentId = newAppointmentBlock.dataset.appointmentId;
+        connectBdForGiveData(
+          `UPDATE doctorfam.appointment SET medicine = '${appointmentMedicine}', description = '${appointmentDescription}' 
+         WHERE ID = ${appointmentId};`
+        );
+        saveBtn.textContent = "Дані збережено";
+        location.reload(); // Обновить страницу
+        textNoFound.style.display = "block";
+      });
+    }
   }
 }
-
-//создаем карточку
-addAppointmentBtn.addEventListener("click", function () {
-  var appointmentsContainer = document.getElementById("doctorAppointments");
-  var newAppointmentBlock = document.createElement("div");
-  newAppointmentBlock.className = "appointmentBlock";
-  newAppointmentBlock.innerHTML =
-    "<h3>Деталі прийому</h3>" +
-    '<p class="doctorName" id="doctorName">Лікар: Лікар ПІБ</p>' +
-    '<button class="toggleBtn">Згорнути</button>' +
-    '<div class="appointmentContent">' +
-    '<p>Дата: <input type="date" class="appointment-date" disabled></p>' +
-    '<p>Час: <input type="time" class="appointment-time" disabled></p>' +
-    '<p>Призначені ліки: <input type="text" placeholder="Введіть назву ліків" class="appointment-medicine"></p>' +
-    '<p>Опис: <textarea placeholder="Введіть опис" class="appointmentDescription" id="appointmentDescription"></textarea></p>' +
-    '<button class="saveBtn" id="saveBtn">Збереги дані</button>' +
-    '<button class="deleteBtn" id="deleteBtn">Видалити</button>' +
-    "</div>";
-  appointmentsContainer.appendChild(newAppointmentBlock);
-  //кнопка разгорнути-згорнути
-  var toggleBtn = newAppointmentBlock.querySelector(".toggleBtn");
-  var appointmentContent = newAppointmentBlock.querySelector(
-    ".appointmentContent"
-  );
-  toggleBtn.addEventListener("click", function () {
-    if (toggleBtn.textContent === "Розгорнути") {
-      toggleBtn.textContent = "Згорнути";
-      appointmentContent.style.display = "block";
-    } else {
-      toggleBtn.textContent = "Розгорнути";
-      appointmentContent.style.display = "none";
-    }
-  });
-  var messageDiv = document.getElementById("add-block-message");
-  messageDiv.style.display = "none";
-
-  //кнопка созранить данные
-  let saveBtn = newAppointmentBlock.querySelector(".saveBtn");
-  saveBtn.addEventListener("click", function () {
-    let appointmentDescription = newAppointmentBlock.querySelector(
-      ".appointmentDescription"
-    ).value;
-    connectBdForGiveData(
-      `` //скрипт
-    );
-    saveBtn.textContent = "Дані збережено";
-  });
-  //удалить данные
-  let deleteBtn = newAppointmentBlock.querySelector(".deleteBtn");
-  deleteBtn.addEventListener("click", function () {
-    let result = confirm("Ви впевнені, що бажаєте видалити запис?");
-    if (result) {
-      let appointmentBlock = this.closest(".appointmentBlock");
-      appointmentBlock.remove();
-    }
-  });
-});

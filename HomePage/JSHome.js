@@ -1,6 +1,5 @@
 import { connectBdForGiveData } from "/BD/BDadditionally.js"; //имортируем функцию соединение с БД для передачи данных
-
-var selectedClientIndex = localStorage.getItem("exportedCount");
+var selectedClientIndex = sessionStorage.getItem("exportedCount");
 console.log("Index client : "+ selectedClientIndex);//индекс входящего клиента
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -19,9 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.innerHTML = ""; // Удалить текущий HTML
     location.href = "profile.html"; // Перейти на новую страницу 'Page404.html'
   });
-
-
-
 
   searchButton.addEventListener("click", function () {
     var district = document.getElementById("district").value;
@@ -119,7 +115,11 @@ function createDoctorBlock(name, workplace, specialization, ID, doctorImage)
   doctorBlock.addEventListener("click", function () {
     console.log("Function change doctor work!");
     // Сохраняем индекс врача в localStorage
-    localStorage.setItem("selectedDoctorIndexChange", ID);
+    sessionStorage.setItem("selectedDoctorIndexChange", ID);
+    var selectedDoctorIndexChange = sessionStorage.getItem(
+      "selectedDoctorIndexChange"
+    );
+    console.log("то что надо " + selectedDoctorIndexChange);
     // Перенаправляем на следующую страницу
     window.location.href = "appointment.html";
   });

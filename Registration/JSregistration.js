@@ -17,6 +17,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
   signUperButton.addEventListener("click", (event) => {
     //регистрация
     event.preventDefault();
+    sessionStorage.setItem("exportedCount", 0);
     console.log("начало");
     let loginReg = document.getElementById("loginReg").value;
     let emailReg = document.getElementById("emailReg").value;
@@ -32,7 +33,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         if (data[0]) {
           let count = data[0]["ID"]; // Извлечь число
           console.log("Ответ сервера: ", count);
-          localStorage.setItem("exportedCount", count); // Сохранить count в глобальной переменной
+          sessionStorage.setItem("exportedCount", count); // Сохранить count в глобальной переменной
           if (count > 0) {
             document.body.innerHTML = ""; // Удалить текущий HTML
             location.href = "profile.html"; // Перейти на новую страницу 'Home.html'
@@ -56,6 +57,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
   signINButton.addEventListener("click", (event) => {
     event.preventDefault();
     console.log("начало");
+    sessionStorage.setItem("exportedCount", 0);
     let login = document.getElementById("login").value;
     let password = document.getElementById("password").value;
     document.getElementById("signInForm");
@@ -77,8 +79,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
               if (data[0]) {
                 let count = data[0]["ID"]; // Извлечь число
                 console.log("Ответ сервера: ", count);
-                localStorage.setItem("exportedCount", count); // Сохранить count в глобальной переменной
-                if (count > 1) {
+               sessionStorage.setItem("exportedCount", count); // Сохранить count в глобальной переменной
+                if (count > 0) {
                   document.body.innerHTML = ""; // Удалить текущий HTML
                   location.href = "HomeDoctor.html"; // Перейти на новую страницу 'Home.html'
                 }
@@ -96,8 +98,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
        else 
        {
         // Перенаправляем на интерфейс клиента
-  
-      
               connectBdForGiveData(`use doctorfam;`);
                connectBdForGiveData(`SELECT ID INTO @last_id_in_log_and_password
               FROM doctorfam.log_and_password 
@@ -111,8 +111,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
                   if (data[0]) {
                     let count = data[0]["ID"]; // Извлечь число
                     console.log("Ответ сервера: ", count);
-                    localStorage.setItem("exportedCount", count); // Сохранить count в глобальной переменной
-                    if (count > 2) {
+                    sessionStorage.setItem("exportedCount", count); // Сохранить count в глобальной переменной
+                    if (count > 0) {
                       document.body.innerHTML = ""; // Удалить текущий HTML
                       location.href = "Home.html"; // Перейти на новую страницу 'Home.html'
                     }

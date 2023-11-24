@@ -4,7 +4,7 @@ const AppointmentСonfirmation = document.getElementById("AppointmentСonfirmati
 const ConfirmButton = document.getElementById("ConfirmButton");
 var confirmationCheckbox = document.getElementById("confirmationCheckbox");
 
-var selectedClientIndex = localStorage.getItem("exportedCount");
+var selectedClientIndex = sessionStorage.getItem("exportedCount");
 console.log("Index client : "+ selectedClientIndex);//индекс входящего клиента
 
 //кнопка назад
@@ -24,7 +24,6 @@ appointmentDate.addEventListener("change", () =>
 
 //Уведомление
 confirmationCheckbox.addEventListener("change", () => {
-
 });
 
 //Кнопка подтверждения 
@@ -35,7 +34,9 @@ ConfirmButton.addEventListener("click", () => {
          {
            alert("Запис підтверджена на " + appointmentDate.value);
            console.log("Index client : " + selectedClientIndex); //индекс входящего клиента
-           var selectedDoctorIndexChange = localStorage.getItem("selectedDoctorIndexChange");
+           var selectedDoctorIndexChange = sessionStorage.getItem(
+             "selectedDoctorIndexChange"
+           );
            console.log("Index change doctor: " + selectedDoctorIndexChange);//индекс выбраного доктора
            connectBdForGiveData(
              `INSERT INTO doctorfam.appointment (dateAndTime, doctor_ID, patient_ID) 
@@ -52,7 +53,6 @@ ConfirmButton.addEventListener("click", () => {
         alert("Оберіть дату!");
      }
 });
-
 //Показ календаря
 AppointmentСonfirmation.addEventListener("click", () => {
     var calendar = document.getElementById("calendar");
@@ -60,10 +60,10 @@ AppointmentСonfirmation.addEventListener("click", () => {
     AppointmentСonfirmation.style.display = "none";
   // calendar.style.display = calendar.style.display === "none" ? "block" : "none"; 
 });
-
-
 //Доктор присваивание имени первая страница(подстарница)
-var selectedDoctorIndexChange = localStorage.getItem("selectedDoctorIndexChange");
+var selectedDoctorIndexChange = sessionStorage.getItem(
+  "selectedDoctorIndexChange"
+);
 console.log("Index change doctor: " + selectedDoctorIndexChange);
 connectBdForGiveData(
   `SELECT ID, name, surname FROM doctorfam.doctor WHERE id=${selectedDoctorIndexChange};`
@@ -79,7 +79,6 @@ connectBdForGiveData(
     locationElement.textContent = data[0].surname;
   }
 });
-
 
 //код загрузки
 function simulateLoading() {

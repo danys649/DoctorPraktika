@@ -1,5 +1,5 @@
 import { connectBdForGiveData } from "/BD/BDadditionally.js"; //имортируем функцию соединение с БД для передачи данных
-var selectedClientIndex = localStorage.getItem("exportedCount"); //индекс входящего клиента
+var selectedClientIndex = sessionStorage.getItem("exportedCount");//индекс входящего клиента
 
 const backButton = document.getElementById("backButton");
   backButton.addEventListener("click", () => {
